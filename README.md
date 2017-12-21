@@ -1,4 +1,7 @@
 # software-security
+[ ![Codeship Status for Switch2IT/software-security](https://app.codeship.com/projects/22e31740-c81d-0135-5fef-4a15d2e65107/status?branch=master)](https://app.codeship.com/projects/261519)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c12f86302321478496e175bcee39eb6f)](https://www.codacy.com/app/Switch2IT/software-security?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Switch2IT/software-security&amp;utm_campaign=Badge_Grade)
+
 A Java EE REST API providing functionalities required by the Erasmushogeschool Software Security course.
 Makes use of Java8, Jose4J, JaxRs, Typesafe Config, Swagger, Wildfly Webapp Maven archetype.
 Developed by [Guillaume Vandecasteele](mailto:guillaume.vandecasteele@student.ehb.be).

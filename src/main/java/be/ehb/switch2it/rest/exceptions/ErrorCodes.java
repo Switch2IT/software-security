@@ -6,8 +6,6 @@ package be.ehb.switch2it.rest.exceptions;
  */
 public final class ErrorCodes {
 
-    private ErrorCodes() {}
-
     // HTTP status codes
     //
     public static final int HTTP_STATUS_CODE_INVALID_INPUT              = 400;
@@ -21,4 +19,5 @@ public final class ErrorCodes {
 
     public static final int CONFIGURATION_NOT_READ                      = 1001;
 
+    private ErrorCodes() {}
 }

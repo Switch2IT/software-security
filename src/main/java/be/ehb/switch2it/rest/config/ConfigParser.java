@@ -121,41 +121,4 @@ public class ConfigParser {
             return null;
         }
     }
-
-    private Integer getConfigIntegerProperty(String propKey) {
-        try {
-            return config.getInt(propKey);
-        } catch (ConfigException ex) {
-            log.error("Missing property: {}", propKey);
-            return null;
-        }
-    }
-
-    private Long getConfigLongProperty(String propKey) {
-        try {
-            return config.getLong(propKey);
-        } catch (ConfigException ex) {
-            log.error("Missing property: {}", propKey);
-            return null;
-        }
-    }
-
-    private Boolean getConfigBooleanProperty(String propKey) {
-        try {
-            return config.getBoolean(propKey);
-        } catch (ConfigException ex) {
-            log.error("Missing property: {}", propKey);
-            return false;
-        }
-    }
-
-    private List<String> getConfigStringListProperty(String propKey) {
-        try {
-            return config.getStringList(propKey);
-        } catch (ConfigException ex) {
-            log.error("Missing property: {}", propKey);
-            return Collections.emptyList();
-        }
-    }
-
 }

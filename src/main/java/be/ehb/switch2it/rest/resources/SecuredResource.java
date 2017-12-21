@@ -25,9 +25,6 @@ import javax.ws.rs.core.Response;
 @ApplicationScoped
 public class SecuredResource {
 
-    private static final String TYPE_ICON = "image/x-icon";
-    private static final String HEADER_CONTENT = "Content-Type";
-
     @Context
     private HttpServletRequest servletRequest;
 
