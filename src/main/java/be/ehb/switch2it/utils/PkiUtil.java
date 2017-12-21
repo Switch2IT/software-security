@@ -89,7 +89,7 @@ public final class PkiUtil {
     public static void createCert(String commonName, String organization, String organizationUnit, KeySize keysize) throws Exception {
         SecureRandom sr = SecureRandom.getInstance(SECURE_RANDOM_ALGO);
 
-        KeyPair keyPair = generateKeyPair(keysize.getKeysize(), null);
+        KeyPair keyPair = generateKeyPair(keysize.getKeysize(), sr);
 
 
         X500NameBuilder nameBuilder = new X500NameBuilder(BCStyle.INSTANCE);
