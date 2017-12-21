@@ -33,3 +33,5 @@ software-security {
 ```
 
 Deploy on your favorite Java application server. It was developed and tested on a Wildfly 10 application server, and we make no guarantee as to its functionality on others.
+
+This repository also contains a small util to create a X.509 certificate and private key (in `PEM` format) to use in your choice of OpenID providers. Simply run the main method in the PkiUtil class and follow the prompts in the console.
