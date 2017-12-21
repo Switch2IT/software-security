@@ -1,4 +1,7 @@
 # software-security
+[ ![Codeship Status for Switch2IT/software-security](https://app.codeship.com/projects/22e31740-c81d-0135-5fef-4a15d2e65107/status?branch=master)](https://app.codeship.com/projects/261519)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c12f86302321478496e175bcee39eb6f)](https://www.codacy.com/app/Switch2IT/software-security?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Switch2IT/software-security&amp;utm_campaign=Badge_Grade)
+
 A Java EE REST API providing functionalities required by the Erasmushogeschool Software Security course.
 Makes use of Java8, Jose4J, JaxRs, Typesafe Config, Swagger, Wildfly Webapp Maven archetype.
 Developed by [Guillaume Vandecasteele](mailto:guillaume.vandecasteele@student.ehb.be).
@@ -33,3 +36,5 @@ software-security {
 ```
 
 Deploy on your favorite Java application server. It was developed and tested on a Wildfly 10 application server, and we make no guarantee as to its functionality on others.
+
+This repository also contains a small util to create a X.509 certificate and private key (in `PEM` format) to use in your choice of OpenID providers. Simply run the main method in the PkiUtil class and follow the prompts in the console.
