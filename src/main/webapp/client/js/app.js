@@ -33,7 +33,8 @@ angular.element(document).ready(function ($http) {
     keycloakAuth.init({ onLoad: 'login-required' }).success(function () {
         auth.loggedIn = true;
         auth.authz = keycloakAuth;
-        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/software-security/protocol/openid-connect/logout?redirect_uri=/angular-product/index.html";
+        //TODO make this dynamic or configurable
+        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=/";
         module.factory('Auth', function() {
             return auth;
         });
@@ -45,10 +46,10 @@ angular.element(document).ready(function ($http) {
 });
 
 module.controller('GlobalCtrl', function($scope, $http) {
-    $scope.reloadData = function() {
+    $scope.domain = "";
+    $scope.showDomain = function() {
         $http.get("/software-security/v1/api/private").success(function(data) {
             $scope.domain = data;
-
         });
 
     };

@@ -35,10 +35,10 @@
 
 <div id="content-area" class="col-md-9" role="main">
     <div id="content">
-        <h2><span>Products</span></h2>
+        <h2><span>This is a small demo app. When logged in, press show domain to access the private API endpoint.</span></h2>
         <a href="" ng-click="logout()">Sign Out</a>
-        <button type="submit" data-ng-click="reloadData()">Reload</button>
-        <table class="table" data-ng-show="domain.length > 0">
+        <button type="submit" data-ng-click="showDomain()">Show Domain</button>
+        <table class="table" ng-cloak data-ng-show="domain.length > 0">
             <thead>
             <tr>
                 <th>Domain info</th>
