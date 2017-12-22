@@ -8,7 +8,7 @@ Developed by [Guillaume Vandecasteele](mailto:guillaume.vandecasteele@student.eh
 
 ## How to use
 
-This project contains a small demo login page. If you wish to make use of it, paste a `keycloak.json` file in the `/src/main/webapp/client` folder before building. To try it out, navigate to `/software-security/client`
+This project contains a small demo login page. If you wish to make use of it, paste a `keycloak.json` (which you can obtain from your Keycloak client's installation tab) file in the `/src/main/webapp/client` folder before building. To try it out, navigate to `/software-security/client`
 
 Build with maven 
 
