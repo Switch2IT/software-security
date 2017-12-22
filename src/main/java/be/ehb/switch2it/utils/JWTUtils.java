@@ -35,7 +35,7 @@ public class JWTUtils {
     }
 
     /**
-     * Kong validates the JWT token, thus for receiving tokens, we don't need to revalidate, just parse and return the JwtContext.
+     * We just want to consume the claims
      *
      * @param jwt
      * @return
