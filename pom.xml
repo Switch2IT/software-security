@@ -21,7 +21,7 @@
 
     <groupId>be.ehb.switch2it</groupId>
     <artifactId>software-security</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>war</packaging>
     <name>Software Security API</name>
     <description>A Java EE REST API providing functionalities required by the Erasmushogeschool Software Security
@@ -36,6 +36,16 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <name>Guillaume Vandecasteele</name>
+            <email>guillaume.vandecasteele@student.ehb.be</email>
+            <organizationUrl>http://www.ehb.be</organizationUrl>
+            <organization>Erasmushogeschool</organization>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
 
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following 

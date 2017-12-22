@@ -1,7 +1,6 @@
 package be.ehb.switch2it.rest;
 
 import be.ehb.switch2it.rest.filters.RequestFilter;
-import be.ehb.switch2it.rest.resources.AssessmentResource;
 import be.ehb.switch2it.rest.resources.SecuredResource;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -23,7 +22,6 @@ public class JaxRsActivator extends Application {
         resources.add(RequestFilter.class);
         resources.add(ApiListingResource.class);
         resources.add(SwaggerSerializers.class);
-        resources.add(AssessmentResource.class);
         resources.add(SecuredResource.class);
         return resources;
     }

@@ -17,7 +17,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.bouncycastle.util.encoders.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +27,7 @@ import java.security.*;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
@@ -132,13 +132,13 @@ public final class PkiUtil {
 
     public static String convertToPem(X509Certificate cert) throws CertificateEncodingException {
         byte[] derCert = cert.getEncoded();
-        String pemCertPre = Base64.toBase64String(derCert);
+        String pemCertPre = Base64.getMimeEncoder().encodeToString(derCert);
         return BEGIN_CERT + pemCertPre + END_CERT;
     }
 
     public static String convertToPem(PrivateKey priv) {
         byte[] derPriv = priv.getEncoded();
-        String privPem = Base64.toBase64String(derPriv);
+        String privPem = Base64.getMimeEncoder().encodeToString(derPriv);
         return BEGIN_PRIV_KEY + privPem + END_PRIV_KEY;
     }
 
