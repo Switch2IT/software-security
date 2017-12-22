@@ -37,6 +37,16 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Guillaume Vandecasteele</name>
+            <email>guillaume.vandecasteele@student.ehb.be</email>
+            <organizationUrl>http://www.ehb.be</organizationUrl>
+            <organization>Erasmushogeschool</organization>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following 
             message: -->
