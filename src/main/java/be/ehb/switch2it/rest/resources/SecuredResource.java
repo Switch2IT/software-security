@@ -15,6 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Guillaume Vandecasteele
@@ -25,11 +27,14 @@ import javax.ws.rs.core.Response;
 @ApplicationScoped
 public class SecuredResource {
 
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
     @Context
     private HttpServletRequest servletRequest;
 
     @GET
     @Path("public")
+    @ApiOperation(value = "Get welcome page", notes = "This endpoint returns the index HTML welcome page.")
     @ApiResponses({
             @ApiResponse(code = 200, response = String.class, message = "Success")
     })
@@ -59,19 +64,21 @@ public class SecuredResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
     public Response getHostname() {
         Response response;
+        String textToDisplay = String.format("%s - %s", SDF.format(new Date()), servletRequest.getServerName());
         String acceptHeader = servletRequest.getHeader("accept");
         if (acceptHeader != null && acceptHeader.contains(",")) {
-            response = Response.ok().entity(servletRequest.getServerName()).build();
+            response = Response.ok().entity(textToDisplay).build();
         } else {
             try {
                 MediaType type = MediaType.valueOf(acceptHeader);
+
                 if (type.equals(MediaType.TEXT_PLAIN_TYPE) || type.equals(MediaType.TEXT_HTML_TYPE)) {
-                    response = Response.ok().entity(servletRequest.getServerName()).build();
+                    response = Response.ok().entity(textToDisplay).build();
                 } else {
-                    response = Response.ok().entity(new DomainResponse(servletRequest.getServerName())).build();
+                    response = Response.ok().entity(new DomainResponse(textToDisplay)).build();
                 }
             } catch (IllegalArgumentException ex) {
-                response = Response.ok().entity(servletRequest.getServerName()).build();
+                response = Response.ok().entity(textToDisplay).build();
             }
         }
         return response;

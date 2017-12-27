@@ -34,7 +34,7 @@ angular.element(document).ready(function ($http) {
         auth.loggedIn = true;
         auth.authz = keycloakAuth;
         //TODO make this dynamic or configurable
-        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=/";
+        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=https%3A%2F%2Fwww.google.com";
         module.factory('Auth', function() {
             return auth;
         });
