@@ -18,7 +18,7 @@
 var module = angular.module('product', []);
 
 var auth = {};
-var logout = function(){
+var logout = function () {
     console.log('*** LOGOUT');
     auth.loggedIn = false;
     auth.authz = null;
@@ -30,25 +30,25 @@ angular.element(document).ready(function ($http) {
     var keycloakAuth = new Keycloak('keycloak.json');
     auth.loggedIn = false;
 
-    keycloakAuth.init({ onLoad: 'login-required' }).success(function () {
+    keycloakAuth.init({onLoad: 'login-required'}).success(function () {
         auth.loggedIn = true;
         auth.authz = keycloakAuth;
         //TODO make this dynamic or configurable
         auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=https%3A%2F%2Fwww.google.com";
-        module.factory('Auth', function() {
+        module.factory('Auth', function () {
             return auth;
         });
         angular.bootstrap(document, ["product"]);
     }).error(function () {
-            window.location.reload();
-        });
+        window.location.reload();
+    });
 
 });
 
-module.controller('GlobalCtrl', function($scope, $http) {
+module.controller('GlobalCtrl', function ($scope, $http) {
     $scope.domain = "";
-    $scope.showDomain = function() {
-        $http.get("/software-security/v1/api/private").success(function(data) {
+    $scope.showDomain = function () {
+        $http.get("/software-security/v1/api/private").success(function (data) {
             $scope.domain = data;
         });
 
@@ -57,19 +57,19 @@ module.controller('GlobalCtrl', function($scope, $http) {
 });
 
 
-module.factory('authInterceptor', function($q, Auth) {
+module.factory('authInterceptor', function ($q, Auth) {
     return {
         request: function (config) {
             var deferred = $q.defer();
             if (Auth.authz.token) {
-                Auth.authz.updateToken(5).success(function() {
+                Auth.authz.updateToken(5).success(function () {
                     config.headers = config.headers || {};
                     config.headers.Authorization = 'Bearer ' + Auth.authz.token;
 
                     deferred.resolve(config);
-                }).error(function() {
-                        deferred.reject('Failed to refresh token');
-                    });
+                }).error(function () {
+                    deferred.reject('Failed to refresh token');
+                });
             }
             return deferred.promise;
         }
@@ -77,19 +77,17 @@ module.factory('authInterceptor', function($q, Auth) {
 });
 
 
-
-
-module.config(function($httpProvider) {
+module.config(function ($httpProvider) {
     $httpProvider.responseInterceptors.push('errorInterceptor');
     $httpProvider.interceptors.push('authInterceptor');
 
 });
 
-module.factory('errorInterceptor', function($q) {
-    return function(promise) {
-        return promise.then(function(response) {
+module.factory('errorInterceptor', function ($q) {
+    return function (promise) {
+        return promise.then(function (response) {
             return response;
-        }, function(response) {
+        }, function (response) {
             if (response.status == 401) {
                 console.log('session timeout?');
                 logout();
