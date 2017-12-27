@@ -9,17 +9,17 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 
 /**
  * @author Guillaume Vandecasteele
  * @since 2017
  */
+@Singleton
 public class ConfigParser {
 
     private static final Logger log = LoggerFactory.getLogger(ConfigParser.class);
@@ -57,7 +57,7 @@ public class ConfigParser {
             appConfig.setKeycloakIssuer(getKeycloakIssuer());
             appConfig.setKeycloakAudience(getKeycloakAudience());
 
-            log.info("=================== Domain-replier Configuration ===================");
+            log.info("=================== Software Security Configuration ===================");
             log.info("General - Using configuration file: {}", appConfig.getConfigurationFile());
             log.info("General - Build: {}", appConfig.getBuildDate());
             log.info("General - Version: {}", appConfig.getVersion());
@@ -71,7 +71,7 @@ public class ConfigParser {
         }
     }
 
-    @DomainReplier
+    @SoftwareSecurity
     @Produces
     public AppConfig getAppConfig() {
         return appConfig;

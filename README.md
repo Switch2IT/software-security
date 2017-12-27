@@ -6,9 +6,9 @@ A Java EE REST API providing functionalities required by the Erasmushogeschool S
 Makes use of Java8, Jose4J, JaxRs, Typesafe Config, Swagger, Wildfly Webapp Maven archetype.
 Developed by [Guillaume Vandecasteele](mailto:guillaume.vandecasteele@student.ehb.be).
 
-## How to use
+## Build Instructions
 
-This project contains a small demo login page. If you wish to make use of it, paste a `keycloak.json` (which you can obtain from your Keycloak client's installation tab) file in the `/src/main/webapp/client` folder before building. To try it out, navigate to `/software-security/client`
+
 
 Build with maven 
 
@@ -39,4 +39,40 @@ software-security {
 
 Deploy on your favorite Java application server. It was developed and tested on a Wildfly 10 application server, and we make no guarantee as to its functionality on others.
 
-This repository also contains a small util to create a X.509 certificate and private key (in `PEM` format) to use in your choice of OpenID providers. Simply run the main method in the PkiUtil class and follow the prompts in the console.
+## Included Web Applications
+
+### Demo Keycloak Login Application (`/software-security/client`)
+
+This project contains a small demo login page which can be found at `/software-security/client`. In order for it to work you **must** build this project with a valid Keycloak JSON OIDC installation file named `keycloak.json` (which you can obtain from your Keycloak client's `installation` tab) present in the `/src/main/webapp/client` folder. The file should look a little like this:
+
+```json
+{
+  "realm": "softwaresecurity",
+  "auth-server-url": "https://your.domain/auth",
+  "ssl-required": "external",
+  "resource": "client_id",
+  "credentials": {
+    "secret": "client_secret"
+  },
+  "confidential-port": 0,
+  "policy-enforcer": {}
+}
+```
+
+To try it out, navigate to `/software-security/client`, you should automatically be redirected to your Keycloak's login page. Once you have logged in, you will be able to call the private endpoint using the access token obtained from Keycloak and display the server name that is hosting your application, prefixed by the current date and time.
+
+It is also possible to try out your token by using Postman or CURL:
+
+```bash
+curl -X GET \
+  https://your.domain/software-security/v1/api/private \
+  -H 'Authorization: Bearer eyJhbG...LpxbUg'
+```
+
+### Swagger UI
+
+This project also contains a Swagger UI component, which can be found at `software-security/swagger`. The UI is built up with the `/software-security/v1/swagger.json` file that is generated based on the Java REST API's Swagger annotations.
+
+## Utils
+
+This repository also contains a small util to create a X.509 certificate with all Key Usage extensions and a private key (in `PEM` format) to use in your choice of OpenID providers. Simply run the main method in the PkiUtil class and follow the prompts in the console.

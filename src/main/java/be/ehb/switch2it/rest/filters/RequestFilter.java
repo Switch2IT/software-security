@@ -1,7 +1,7 @@
 package be.ehb.switch2it.rest.filters;
 
 import be.ehb.switch2it.rest.config.AppConfig;
-import be.ehb.switch2it.rest.config.DomainReplier;
+import be.ehb.switch2it.rest.config.SoftwareSecurity;
 import be.ehb.switch2it.rest.model.ErrorBean;
 import be.ehb.switch2it.utils.JWTUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +34,7 @@ public class RequestFilter implements ContainerRequestFilter {
 
     private static final String SECURED_ENDPOINTS = "/api/private";
 
-    @DomainReplier
+    @SoftwareSecurity
     @Inject
     private AppConfig config;
 
