@@ -9,20 +9,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class DomainResponse {
 
-    private String domain;
+    private String timeAndDomain;
 
     public DomainResponse() {
     }
 
-    public DomainResponse(String domain) {
-        this.domain = domain;
+    public DomainResponse(String timeAndDomain) {
+        this.timeAndDomain = timeAndDomain;
     }
 
-    public String getDomain() {
-        return domain;
+    public String getTimeAndDomain() {
+        return timeAndDomain;
     }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
+    public void setTimeAndDomain(String timeAndDomain) {
+        this.timeAndDomain = timeAndDomain;
     }
 }

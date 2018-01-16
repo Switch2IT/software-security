@@ -35,22 +35,20 @@
 
 <div id="content-area" class="col-md-9" role="main">
     <div id="content">
-        <h2><span>This is a small demo app. When logged in, press show domain to access the private API endpoint.</span>
+        <h1>
+            <p>Software Security API Client</p>
+        </h1>
+        <h2>
+            <p>Press "Show Domain Info" to perform a request to the private API endpoint. The response will be displayed below</p>
         </h2>
-        <a href="" ng-click="logout()">Sign Out</a>
-        <button type="submit" data-ng-click="showDomain()">Show Domain</button>
-        <table class="table" ng-cloak data-ng-show="domain.length > 0">
-            <thead>
-            <tr>
-                <th>Domain info</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{domain}}</td>
-            </tr>
-            </tbody>
-        </table>
+        <h3>
+            <p>Use the "Log in" & "Log out" button to test authorized and unauthorized requests respectively</p>
+        </h3>
+
+        <button type="submit" data-ng-click="showDomain()">Show Domain Info</button>
+        <button type="submit" ng-cloak data-ng-show="!token" data-ng-click="login()">Log in</button>
+        <button type="submit" ng-cloak data-ng-show="token.length > 0" data-ng-click="logout()">Sign Out</button>
+        <h4 ng-cloak data-ng-show="responseContent.length > 0">JSON Response content: {{responseContent}}</h4>
     </div>
 </div>
 </body>

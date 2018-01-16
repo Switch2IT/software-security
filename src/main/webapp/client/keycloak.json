@@ -1,0 +1,11 @@
+{
+  "realm": "softwaresecurity",
+  "auth-server-url": "https://idp.vandecasteele.tk/auth",
+  "ssl-required": "external",
+  "resource": "confidential-client",
+  "credentials": {
+    "secret": "57a5a39e-997d-4019-aa6d-ce789c1752b6"
+  },
+  "confidential-port": 0,
+  "policy-enforcer": {}
+}

@@ -16,8 +16,10 @@
  */
 
 var module = angular.module('product', []);
+var loggedIn = false;
 
 var auth = {};
+
 var logout = function () {
     console.log('*** LOGOUT');
     auth.loggedIn = false;
@@ -25,16 +27,15 @@ var logout = function () {
     window.location = auth.logoutUrl;
 };
 
-
-angular.element(document).ready(function ($http) {
+var login = function () {
+    console.log("Logging in");
     var keycloakAuth = new Keycloak('keycloak.json');
     auth.loggedIn = false;
 
     keycloakAuth.init({onLoad: 'login-required'}).success(function () {
         auth.loggedIn = true;
         auth.authz = keycloakAuth;
-        //TODO make this dynamic or configurable
-        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=https%3A%2F%2Fwww.google.com";
+        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=" + window.location.href;
         module.factory('Auth', function () {
             return auth;
         });
@@ -42,34 +43,57 @@ angular.element(document).ready(function ($http) {
     }).error(function () {
         window.location.reload();
     });
+}
 
+angular.element(document).ready(function ($http) {
+    var keycloakAuth = new Keycloak('keycloak.json');
+    auth.loggedIn = false;
+
+    keycloakAuth.init({onLoad: 'check-sso'}).success(function () {
+        auth.loggedIn = true;
+        auth.authz = keycloakAuth;
+        auth.logoutUrl = keycloakAuth.authServerUrl + "/realms/" + keycloakAuth.realm + "/protocol/openid-connect/logout?redirect_uri=" + window.location.href;
+        module.factory('Auth', function () {
+            return auth;
+        });
+        angular.bootstrap(document, ["product"]);
+    }).error(function () {
+        window.location.reload();
+    });
 });
 
-module.controller('GlobalCtrl', function ($scope, $http) {
+module.controller('GlobalCtrl', function ($scope, $http, Auth) {
     $scope.domain = "";
+    $scope.token = Auth.authz.token;
     $scope.showDomain = function () {
+        console.log('Called show Domain');
         $http.get("/software-security/v1/api/private").success(function (data) {
-            $scope.domain = data;
+            $scope.responseContent = data.timeAndDomain;
+        }).error(function (data) {
+            $scope.responseContent = data.message;
         });
-
     };
     $scope.logout = logout;
+    $scope.login = login;
 });
 
 
 module.factory('authInterceptor', function ($q, Auth) {
     return {
         request: function (config) {
+            config.headers = config.headers || {};
+            config.headers.Accept = "application/json";
             var deferred = $q.defer();
             if (Auth.authz.token) {
                 Auth.authz.updateToken(5).success(function () {
-                    config.headers = config.headers || {};
                     config.headers.Authorization = 'Bearer ' + Auth.authz.token;
 
                     deferred.resolve(config);
                 }).error(function () {
                     deferred.reject('Failed to refresh token');
                 });
+            } else {
+                deferred.resolve(config);
             }
             return deferred.promise;
         }
@@ -90,7 +114,7 @@ module.factory('errorInterceptor', function ($q) {
         }, function (response) {
             if (response.status == 401) {
                 console.log('session timeout?');
-                logout();
+                //logout();
             } else if (response.status == 403) {
                 alert("Forbidden");
             } else if (response.status == 404) {
