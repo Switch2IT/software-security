@@ -59,7 +59,7 @@ This project contains a small demo login page which can be found at `/software-s
 }
 ```
 
-To try it out, navigate to `/software-security/client`, you should automatically be redirected to your Keycloak's login page. Once you have logged in, you will be able to call the private endpoint using the access token obtained from Keycloak and display the server name that is hosting your application, prefixed by the current date and time.
+To try it out, navigate to `/software-security/client`, you can query the API private endpoint by clicking on `Show Domain Info`; this will display the domain name of the server that is hosting your application, prefixed by the current date and time. If unauthorized, it will return an `Unauthorized` message also prefixed by the current date and time. Press `Log in` or `Log out` to try querying the API in a different auth state
 
 It is also possible to try out your token by using Postman or CURL:
 

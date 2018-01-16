@@ -19,6 +19,8 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Guillaume Vandecasteele
@@ -27,6 +29,7 @@ import java.io.IOException;
 public class RequestFilter implements ContainerRequestFilter {
 
     private static final Logger log = LoggerFactory.getLogger(RequestFilter.class);
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     private static final String JWT_HEADER_NAME = "Authorization";
     private static final String NO_ACCESS = "Unauthorized";
@@ -77,6 +80,6 @@ public class RequestFilter implements ContainerRequestFilter {
     }
 
     private void abort(ContainerRequestContext requestContext) {
-        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).type(MediaType.APPLICATION_JSON).entity(new ErrorBean().withMessage(NO_ACCESS)).build());
+        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).type(MediaType.APPLICATION_JSON).entity(new ErrorBean().withMessage(String.format("%s - %s", SDF.format(new Date()), NO_ACCESS))).build());
     }
 }
