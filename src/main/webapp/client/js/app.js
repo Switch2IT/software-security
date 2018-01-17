@@ -44,7 +44,7 @@ var login = function () {
     });
 }
 
-angular.element(document).ready(function ($http) {
+angular.element(document).ready(function () {
     var keycloakAuth = new Keycloak('keycloak.json');
     auth.loggedIn = false;
 
@@ -65,7 +65,6 @@ module.controller('GlobalCtrl', function ($scope, $http, Auth) {
     $scope.responseContent = "";
     $scope.token = Auth.authz.token;
     $scope.showPrivateEndpointResponse = function () {
-        $scope.endpoint = 'Private';
         $http.get("/software-security/v1/api/private").success(function (data) {
             $scope.textColor = {'color': 'green'};
             $scope.responseContent = data.responseContent;
@@ -75,7 +74,6 @@ module.controller('GlobalCtrl', function ($scope, $http, Auth) {
         });
     };
     $scope.showPublicEndpointResponse = function () {
-        $scope.endpoint = 'Public';
         $http.get("/software-security/v1/api/public").success(function (data) {
             $scope.textColor = {'color': 'green'};
             $scope.responseContent = data.responseContent;
