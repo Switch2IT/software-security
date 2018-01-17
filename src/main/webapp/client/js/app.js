@@ -63,14 +63,26 @@ angular.element(document).ready(function ($http) {
 });
 
 module.controller('GlobalCtrl', function ($scope, $http, Auth) {
-    $scope.domain = "";
+    $scope.responseContent = "";
     $scope.token = Auth.authz.token;
-    $scope.showDomain = function () {
-        console.log('Called show Domain');
+    $scope.showPrivateEndpointResponse = function () {
+        $scope.endpoint = 'Private';
         $http.get("/software-security/v1/api/private").success(function (data) {
-            $scope.responseContent = data.timeAndDomain;
+            $scope.textColor = {'color': 'green'};
+            $scope.responseContent = data.responseContent;
         }).error(function (data) {
-            $scope.responseContent = data.message;
+            $scope.textColor = {'color': 'red'};
+            $scope.responseContent = data.responseContent;
+        });
+    };
+    $scope.showPublicEndpointResponse = function () {
+        $scope.endpoint = 'Public';
+        $http.get("/software-security/v1/api/public").success(function (data) {
+            $scope.textColor = {'color': 'green'};
+            $scope.responseContent = data.responseContent;
+        }).error(function (data) {
+            $scope.textColor = {'color': 'red'};
+            $scope.responseContent = data.responseContent;
         });
     };
     $scope.logout = logout;
@@ -84,10 +96,9 @@ module.factory('authInterceptor', function ($q, Auth) {
             config.headers = config.headers || {};
             config.headers.Accept = "application/json";
             var deferred = $q.defer();
-            if (Auth.authz.token) {
+            if (Auth.authz.token && config.url.endsWith("private")) {
                 Auth.authz.updateToken(5).success(function () {
                     config.headers.Authorization = 'Bearer ' + Auth.authz.token;
-
                     deferred.resolve(config);
                 }).error(function () {
                     deferred.reject('Failed to refresh token');
