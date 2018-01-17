@@ -24,7 +24,7 @@ import java.util.Date;
  * @author Guillaume Vandecasteele
  * @since 2017
  */
-@Api(value = "REST API", description = "Some endpoint require a valid JWT")
+@Api(value = "Software Security Course API", description = "Some endpoint require a valid JWT")
 @Path("/api/")
 @ApplicationScoped
 public class SecuredResource {

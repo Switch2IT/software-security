@@ -21,7 +21,7 @@
 
     <groupId>be.ehb.switch2it</groupId>
     <artifactId>software-security</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3</version>
     <packaging>war</packaging>
     <name>Software Security API</name>
     <description>A Java EE REST API providing functionalities required by the Erasmushogeschool Software Security
@@ -81,6 +81,7 @@
         <version.typesafe>1.3.2</version.typesafe>
         <version.bouncycastle>1.58</version.bouncycastle>
         <version.commons-io>2.6</version.commons-io>
+        <version.jodatime>2.9.9</version.jodatime>
     </properties>
 
 
@@ -200,6 +201,11 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
             <version>${version.bouncycastle}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${version.jodatime}</version>
         </dependency>
 
     </dependencies>

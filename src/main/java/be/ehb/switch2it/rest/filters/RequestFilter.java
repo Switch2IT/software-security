@@ -89,7 +89,7 @@ public class RequestFilter implements ContainerRequestFilter {
         GenericResponse genericResponse = new GenericResponse();
         String timeAndDate = SDF.format(new Date());
         try {
-            genericResponse.setResponseContent(String.format("%s - Unauthorized to access: %s", timeAndDate , UriUtil.getRequestUri(servletRequest)));
+            genericResponse.setResponseContent(String.format("%s - Unauthorized to access: %s", timeAndDate, UriUtil.getRequestUri(servletRequest)));
         } catch (URISyntaxException ex) {
             genericResponse.setResponseContent(String.format("%s - Unauthorized: Failure to reconstruct request URI: %s", timeAndDate, ex.getMessage()));
         }

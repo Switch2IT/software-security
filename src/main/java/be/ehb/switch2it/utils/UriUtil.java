@@ -1,8 +1,6 @@
 package be.ehb.switch2it.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
@@ -16,7 +14,8 @@ public final class UriUtil {
 
     private static final String X_FORWARD_PROTO_HEADER_NAME = "x-forwarded-proto";
 
-    private UriUtil() {}
+    private UriUtil() {
+    }
 
     public static String getRequestUri(HttpServletRequest servletRequest) throws URISyntaxException {
         String scheme = servletRequest.getHeader(X_FORWARD_PROTO_HEADER_NAME);
