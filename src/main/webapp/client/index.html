@@ -20,7 +20,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Angular Product Portal</title>
+    <title>Software Security API Client</title>
+    <link rel="icon" type="image/png" href="../favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="../favicon-16x16.png" sizes="16x16"/>
 
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-resource.js"></script>
@@ -39,7 +41,8 @@
             <p>Software Security API Client</p>
         </h1>
         <h2>
-            <p>Press "Show Public Endpoint Response" or "Show Private Endpoint Response" to trigger a call to either of the API endpoints. The response will be displayed below</p>
+            <p>Press "Show Public Endpoint Response" or "Show Private Endpoint Response" to trigger a call to either of
+                the API endpoints. The response will be displayed below</p>
         </h2>
         <h3>
             <p>Use the "Log in" & "Log out" button to test authorized and unauthorized requests respectively</p>
@@ -48,7 +51,8 @@
         <button type="submit" data-ng-click="showPrivateEndpointResponse()">Show Private Endpoint Response</button>
         <button type="submit" ng-cloak data-ng-show="!token" data-ng-click="login()">Log In</button>
         <button type="submit" ng-cloak data-ng-show="token.length > 0" data-ng-click="logout()">Log Out</button>
-        <h4 ng-style="textColor" ng-cloak data-ng-show="responseContent.length > 0">JSON {{endpoint}} Response content: {{responseContent}}</h4>
+        <h4 ng-style="textColor" ng-cloak data-ng-show="responseContent.length > 0">JSON {{endpoint}} Response content:
+            {{responseContent}}</h4>
     </div>
 </div>
 </body>

@@ -1,5 +1,7 @@
 package be.ehb.switch2it.rest.config;
 
+import org.joda.time.DateTime;
+
 /**
  * @author Guillaume Vandecasteele
  * @since 2017
@@ -8,7 +10,9 @@ public class AppConfig {
 
     private String configurationFile;
     private String version;
-    private String buildDate;
+    private DateTime buildDate;
+
+    private DateTime startUpDate;
 
     private String auth0JwksUri;
     private String auth0Audience;
@@ -34,12 +38,20 @@ public class AppConfig {
         this.version = version;
     }
 
-    public String getBuildDate() {
+    public DateTime getBuildDate() {
         return buildDate;
     }
 
-    public void setBuildDate(String buildDate) {
+    public void setBuildDate(DateTime buildDate) {
         this.buildDate = buildDate;
+    }
+
+    public DateTime getStartUpDate() {
+        return startUpDate;
+    }
+
+    public void setStartUpDate(DateTime startUpDate) {
+        this.startUpDate = startUpDate;
     }
 
     public String getAuth0JwksUri() {
