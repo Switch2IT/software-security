@@ -16,7 +16,6 @@
  */
 
 var module = angular.module('product', []);
-var loggedIn = false;
 
 var auth = {};
 
@@ -63,14 +62,26 @@ angular.element(document).ready(function ($http) {
 });
 
 module.controller('GlobalCtrl', function ($scope, $http, Auth) {
-    $scope.domain = "";
+    $scope.responseContent = "";
     $scope.token = Auth.authz.token;
-    $scope.showDomain = function () {
-        console.log('Called show Domain');
+    $scope.showPrivateEndpointResponse = function () {
+        $scope.endpoint = 'Private';
         $http.get("/software-security/v1/api/private").success(function (data) {
-            $scope.responseContent = data.timeAndDomain;
+            $scope.textColor = {'color': 'green'};
+            $scope.responseContent = data.responseContent;
         }).error(function (data) {
-            $scope.responseContent = data.message;
+            $scope.textColor = {'color': 'red'};
+            $scope.responseContent = data.responseContent;
+        });
+    };
+    $scope.showPublicEndpointResponse = function () {
+        $scope.endpoint = 'Public';
+        $http.get("/software-security/v1/api/public").success(function (data) {
+            $scope.textColor = {'color': 'green'};
+            $scope.responseContent = data.responseContent;
+        }).error(function (data) {
+            $scope.textColor = {'color': 'red'};
+            $scope.responseContent = data.responseContent;
         });
     };
     $scope.logout = logout;
@@ -84,10 +95,9 @@ module.factory('authInterceptor', function ($q, Auth) {
             config.headers = config.headers || {};
             config.headers.Accept = "application/json";
             var deferred = $q.defer();
-            if (Auth.authz.token) {
+            if (Auth.authz && Auth.authz.token && config.url.endsWith("private")) {
                 Auth.authz.updateToken(5).success(function () {
                     config.headers.Authorization = 'Bearer ' + Auth.authz.token;
-
                     deferred.resolve(config);
                 }).error(function () {
                     deferred.reject('Failed to refresh token');
@@ -112,12 +122,12 @@ module.factory('errorInterceptor', function ($q) {
         return promise.then(function (response) {
             return response;
         }, function (response) {
-            if (response.status == 401) {
-                console.log('session timeout?');
-                //logout();
-            } else if (response.status == 403) {
+            if (response.status === 401) {
+                auth.loggedIn = false;
+                auth.authz = null;
+            } else if (response.status === 403) {
                 alert("Forbidden");
-            } else if (response.status == 404) {
+            } else if (response.status === 404) {
                 alert("Not found");
             } else if (response.status) {
                 if (response.data && response.data.errorMessage) {

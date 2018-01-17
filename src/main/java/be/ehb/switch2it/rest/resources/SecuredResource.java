@@ -1,7 +1,8 @@
 package be.ehb.switch2it.rest.resources;
 
-import be.ehb.switch2it.rest.model.ErrorBean;
-import be.ehb.switch2it.rest.responses.DomainResponse;
+import be.ehb.switch2it.rest.model.EndpointType;
+import be.ehb.switch2it.rest.responses.GenericResponse;
+import be.ehb.switch2it.utils.UriUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,7 +24,7 @@ import java.util.Date;
  * @author Guillaume Vandecasteele
  * @since 2017
  */
-@Api(value = "REST API", description = "Some endpoint require a valid JWT")
+@Api(value = "Software Security Course API", description = "Some endpoint require a valid JWT")
 @Path("/api/")
 @ApplicationScoped
 public class SecuredResource {
@@ -34,37 +36,39 @@ public class SecuredResource {
 
     @GET
     @Path("public")
-    @ApiOperation(value = "Get welcome page", notes = "This endpoint returns the index HTML welcome page.")
+    @ApiOperation(value = "Public endpoint", notes = "This endpoint returns a string value composed of the date & time, endpoint type (public or private) and the request URL including any querystring parameters.")
     @ApiResponses({
+            @ApiResponse(code = 200, response = GenericResponse.class, message = "Success"),
             @ApiResponse(code = 200, response = String.class, message = "Success")
     })
-    @Produces(MediaType.TEXT_HTML)
-    public Response getIndex() {
-        return Response.ok().entity("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Private</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<h1>Private</h1>\n" +
-                "<h2>Go Away!</h2>\n" +
-                "</body>\n" +
-                "</html>").build();
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
+    public Response getPublicResponse() {
+        return getApiResponse(EndpointType.PUBLIC);
     }
 
 
     @GET
     @Path("private")
-    @ApiOperation(value = "Get domain info", notes = "This endpoint returns the domain info if a valid JWT was included in the request.")
+    @ApiOperation(value = "Private Endpoint", notes = "This endpoint returns a string value composed of the date & time, endpoint type (public or private) and the request URL including any querystring parameters if a valid JWT was included in the request. Otherwise it returns a JSON error message prefixed by the date and time")
     @ApiResponses({
+            @ApiResponse(code = 200, response = GenericResponse.class, message = "Success"),
             @ApiResponse(code = 200, response = String.class, message = "Success"),
-            @ApiResponse(code = 401, response = ErrorBean.class, message = "Unauthorized")
+            @ApiResponse(code = 401, response = GenericResponse.class, message = "Unauthorized")
     })
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
-    public Response getHostname() {
+    public Response getPrivateResponse() {
+        return getApiResponse(EndpointType.PRIVATE);
+    }
+
+    private Response getApiResponse(EndpointType endpointType) {
         Response response;
-        String textToDisplay = String.format("%s - %s", SDF.format(new Date()), servletRequest.getServerName());
+        String timeAndDate = SDF.format(new Date());
+        String textToDisplay;
+        try {
+            textToDisplay = String.format("%s - %s API endpoint at: %s", timeAndDate, endpointType.getDescription(), UriUtil.getRequestUri(servletRequest));
+        } catch (URISyntaxException ex) {
+            textToDisplay = String.format("%s - Failure to reconstruct request URI: %s", timeAndDate, ex.getMessage());
+        }
         String acceptHeader = servletRequest.getHeader("accept");
         if (acceptHeader != null && acceptHeader.contains(",")) {
             response = Response.ok().entity(textToDisplay).build();
@@ -75,7 +79,7 @@ public class SecuredResource {
                 if (type.equals(MediaType.TEXT_PLAIN_TYPE) || type.equals(MediaType.TEXT_HTML_TYPE)) {
                     response = Response.ok().entity(textToDisplay).build();
                 } else {
-                    response = Response.ok().entity(new DomainResponse(textToDisplay)).build();
+                    response = Response.ok().entity(new GenericResponse(textToDisplay)).build();
                 }
             } catch (IllegalArgumentException ex) {
                 response = Response.ok().entity(textToDisplay).build();

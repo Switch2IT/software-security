@@ -8,8 +8,6 @@ Developed by [Guillaume Vandecasteele](mailto:guillaume.vandecasteele@student.eh
 
 ## Build Instructions
 
-
-
 Build with maven 
 
 ```bash
@@ -38,6 +36,8 @@ software-security {
 ```
 
 Deploy on your favorite Java application server. It was developed and tested on a Wildfly 10 application server, and we make no guarantee as to its functionality on others.
+
+For API documentation, we refer you to the Swagger UI web application that is included.
 
 ## Included Web Applications
 

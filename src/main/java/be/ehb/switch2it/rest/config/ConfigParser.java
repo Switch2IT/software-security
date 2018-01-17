@@ -1,9 +1,11 @@
 package be.ehb.switch2it.rest.config;
 
 import be.ehb.switch2it.rest.exceptions.ExceptionFactory;
+import be.ehb.switch2it.utils.TimeUtil;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigException;
 import com.typesafe.config.ConfigFactory;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +51,7 @@ public class ConfigParser {
 
             appConfig.setConfigurationFile(getConfigurationFile());
             appConfig.setBuildDate(getBuildDate());
+            appConfig.setStartUpDate(DateTime.now());
             appConfig.setVersion(getVersion());
             appConfig.setAuth0JwksUri(getAuth0JwksUri());
             appConfig.setAuth0Issuer(getAuth0Issuer());
@@ -57,17 +60,18 @@ public class ConfigParser {
             appConfig.setKeycloakIssuer(getKeycloakIssuer());
             appConfig.setKeycloakAudience(getKeycloakAudience());
 
-            log.info("=================== Software Security Configuration ===================");
+            log.info("=================== Software Security Configuration ===================================");
             log.info("General - Using configuration file: {}", appConfig.getConfigurationFile());
-            log.info("General - Build: {}", appConfig.getBuildDate());
+            log.info("General - Build date-time: {}", TimeUtil.getFormattedDateTime(appConfig.getBuildDate()));
             log.info("General - Version: {}", appConfig.getVersion());
+            log.info("General - Startup date-time: {}", TimeUtil.getFormattedDateTime(appConfig.getStartUpDate()));
             log.info("IDP - Auth0 - JWKS URI: {}", appConfig.getAuth0JwksUri());
             log.info("IDP - Auth0 - Issuer: {}", appConfig.getAuth0Issuer());
             log.info("IDP - Auth0 - Audience: {}", appConfig.getAuth0Audience());
             log.info("IDP - Keycloak - JWKS URI: {}", appConfig.getKeycloakJwksUri());
             log.info("IDP - Keycloak - Issuer: {}", appConfig.getKeycloakIssuer());
             log.info("IDP - Keycloak - Audience: {}", appConfig.getKeycloakAudience());
-            log.info("====================================================================");
+            log.info("=======================================================================================");
         }
     }
 
@@ -85,8 +89,8 @@ public class ConfigParser {
         return properties.getProperty(IConfig.PROP_FILE_VERSION);
     }
 
-    private String getBuildDate() {
-        return properties.getProperty(IConfig.PROP_FILE_DATE);
+    private DateTime getBuildDate() {
+        return TimeUtil.convertBuildTimeToDateTime(properties.getProperty(IConfig.PROP_FILE_DATE));
     }
 
     private String getAuth0JwksUri() {
