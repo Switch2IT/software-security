@@ -3,7 +3,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c12f86302321478496e175bcee39eb6f)](https://www.codacy.com/app/Switch2IT/software-security?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Switch2IT/software-security&amp;utm_campaign=Badge_Grade)
 
 A Java EE REST API providing functionalities required by the Erasmushogeschool Software Security course.
-Makes use of Java8, Jose4J, JaxRs, Typesafe Config, Swagger, Wildfly Webapp Maven archetype.
+Makes use of Java8, Jose4J, JaxRs, Typesafe Config, Swagger, AngularJS, Wildfly Webapp Maven archetype.
 Developed by [Guillaume Vandecasteele](mailto:guillaume.vandecasteele@student.ehb.be).
 
 ## Build Instructions
@@ -37,7 +37,7 @@ software-security {
 
 Deploy on your favorite Java application server. It was developed and tested on a Wildfly 10 application server, and we make no guarantee as to its functionality on others.
 
-For API documentation, we refer you to the Swagger UI web application that is included.
+For API documentation, we refer you to the [Swagger](https://swagger.io) UI web application that is included.
 
 ## Included Web Applications
 
@@ -59,7 +59,7 @@ This project contains a small demo login page which can be found at `/software-s
 }
 ```
 
-To try it out, navigate to `/software-security/client`, you can query the API private endpoint by clicking on `Show Domain Info`; this will display the domain name of the server that is hosting your application, prefixed by the current date and time. If unauthorized, it will return an `Unauthorized` message also prefixed by the current date and time. Press `Log in` or `Log out` to try querying the API in a different auth state
+To try it out, navigate to `/software-security/client`, you can trigger calls to the API by clicking on `Show Private Endpoint Response` or `Show Public Endpoint Response`; this will display the JSON response content returned by the API's corresponding endpoint in green or red, depending on the returned HTTP status code. Press `Log in` or `Log out` to try querying the API with or without a token.
 
 It is also possible to try out your token by using Postman or CURL:
 
